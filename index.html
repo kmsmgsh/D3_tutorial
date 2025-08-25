@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3 Learning Journey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>D3.js Learning Journey</h1>
+        <p class="subtitle">Interactive Data Visualization Examples</p>
+    </header>
+
+    <nav class="main-nav">
+        <a href="tutorial/index.html" target="_blank" class="nav-link">📚 Tutorial Guides</a>
+        <a href="sandbox.html" target="_blank" class="nav-link">🎮 Playground</a>
+        <a href="monaco-sandbox.html" target="_blank" class="nav-link">✨ Monaco Editor</a>
+        <a href="chart-builder.html" target="_blank" class="nav-link">🏗️ Chart Builder</a>
+        <a href="docs/index.html" target="_blank" class="nav-link">🔧 API Documentation</a>
+        <a href="#examples" class="nav-link">📊 Examples</a>
+    </nav>
+
+    <main class="container">
+        <section id="examples" class="examples-section">
+            <h2>Visualization Examples</h2>
+            <div class="examples-grid">
+                <!-- Basic Charts -->
+                <div class="category">
+                    <h3>📊 Basic Charts</h3>
+                    <div class="example-cards">
+                        <div class="example-card completed" data-example="bar-chart">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart" id="bar-preview"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Bar Chart</h4>
+                                <p>Learn scales, data binding, and SVG basics</p>
+                                <div class="card-tags">
+                                    <span class="tag">Basic</span>
+                                    <span class="tag">Scales</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-card upcoming" data-example="line-chart">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart" id="line-preview"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Line Chart</h4>
+                                <p>Time series data with paths and curves</p>
+                                <div class="card-tags">
+                                    <span class="tag">Time Series</span>
+                                    <span class="tag">Paths</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-card upcoming" data-example="scatter-plot">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart" id="scatter-preview"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Scatter Plot</h4>
+                                <p>Two-dimensional data relationships</p>
+                                <div class="card-tags">
+                                    <span class="tag">Correlation</span>
+                                    <span class="tag">Circles</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Charts -->
+                <div class="category">
+                    <h3>🎯 Interactive Charts</h3>
+                    <div class="example-cards">
+                        <div class="example-card upcoming" data-example="interactive-bar">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Interactive Bar Chart</h4>
+                                <p>Hover effects and tooltips</p>
+                                <div class="card-tags">
+                                    <span class="tag">Events</span>
+                                    <span class="tag">Tooltips</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-card upcoming" data-example="animated-chart">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Animated Transitions</h4>
+                                <p>Smooth data updates and animations</p>
+                                <div class="card-tags">
+                                    <span class="tag">Animations</span>
+                                    <span class="tag">Transitions</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Visualizations -->
+                <div class="category">
+                    <h3>🚀 Advanced Visualizations</h3>
+                    <div class="example-cards">
+                        <div class="example-card upcoming" data-example="force-layout">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Force-Directed Graph</h4>
+                                <p>Network visualization with physics</p>
+                                <div class="card-tags">
+                                    <span class="tag">Networks</span>
+                                    <span class="tag">Physics</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="example-card upcoming" data-example="choropleth">
+                            <div class="card-preview">
+                                <svg width="200" height="120" class="mini-chart"></svg>
+                            </div>
+                            <div class="card-content">
+                                <h4>Choropleth Map</h4>
+                                <p>Geographic data visualization</p>
+                                <div class="card-tags">
+                                    <span class="tag">Geography</span>
+                                    <span class="tag">GeoJSON</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="progress-section">
+            <h2>Learning Progress</h2>
+            <div class="progress-stats">
+                <div class="stat-card">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Upcoming</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">14%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="chart-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title"></h3>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./navigation.js"></script>
+</body>
+</html>

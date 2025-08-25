@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Builder - D3 Learning Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chart-builder.css">
+</head>
+<body class="chart-builder-body">
+    <header class="chart-builder-header">
+        <h1>📊 Chart Builder</h1>
+        <p class="subtitle">Dynamic visualization creator with drag-and-drop interface</p>
+        <a href="index.html" class="back-to-dashboard">← Back to Dashboard</a>
+    </header>
+
+    <div class="chart-builder-container">
+        <!-- Left Panel: Data & Configuration -->
+        <div class="left-panel">
+            <!-- Data Upload Section -->
+            <section class="data-section">
+                <h3>🗂️ Data Source</h3>
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-placeholder">
+                        <div class="upload-icon">📁</div>
+                        <p>Drop CSV, JSON, or TSV files here</p>
+                        <p class="upload-hint">Or click to browse files</p>
+                    </div>
+                    <input type="file" id="file-input" accept=".csv,.json,.tsv,.txt" style="display: none;">
+                </div>
+                
+                <!-- Sample Data Options -->
+                <div class="sample-data">
+                    <h4>Sample Datasets</h4>
+                    <div class="sample-buttons">
+                        <button class="sample-btn" data-sample="sales">📈 Sales Data</button>
+                        <button class="sample-btn" data-sample="iris">🌸 Iris Dataset</button>
+                        <button class="sample-btn" data-sample="stocks">💰 Stock Prices</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Preview & Column Panel -->
+            <section class="data-preview-section" id="data-preview-section" style="display: none;">
+                <h3>📋 Data Preview</h3>
+                <div class="data-info">
+                    <span id="data-rows-count">0 rows</span> × 
+                    <span id="data-cols-count">0 columns</span>
+                </div>
+                <div class="data-table-container">
+                    <table id="data-table">
+                        <thead id="data-table-head"></thead>
+                        <tbody id="data-table-body"></tbody>
+                    </table>
+                </div>
+                
+                <!-- Draggable Columns -->
+                <div class="columns-panel">
+                    <h4>Available Columns</h4>
+                    <div class="columns-list" id="columns-list"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Center Panel: Chart Configuration -->
+        <div class="center-panel">
+            <!-- Chart Type Selection -->
+            <section class="chart-type-section">
+                <h3>📊 Chart Type</h3>
+                <div class="chart-types">
+                    <button class="chart-type-btn active" data-type="bar">
+                        <div class="chart-type-icon">📊</div>
+                        <span>Bar Chart</span>
+                    </button>
+                    <button class="chart-type-btn" data-type="scatter">
+                        <div class="chart-type-icon">⚫</div>
+                        <span>Scatter</span>
+                    </button>
+                    <button class="chart-type-btn" data-type="line">
+                        <div class="chart-type-icon">📈</div>
+                        <span>Line</span>
+                    </button>
+                    <button class="chart-type-btn" data-type="area">
+                        <div class="chart-type-icon">🏔️</div>
+                        <span>Area</span>
+                    </button>
+                    <button class="chart-type-btn" data-type="histogram">
+                        <div class="chart-type-icon">📶</div>
+                        <span>Histogram</span>
+                    </button>
+                    <button class="chart-type-btn" data-type="boxplot">
+                        <div class="chart-type-icon">📦</div>
+                        <span>Box Plot</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Mapping Section -->
+            <section class="mapping-section">
+                <h3>🎯 Visual Mapping</h3>
+                <div class="mapping-zones">
+                    <div class="drop-zone required" id="x-axis-zone">
+                        <div class="zone-header">X-Axis</div>
+                        <div class="zone-content" data-encoding="x">
+                            <div class="zone-placeholder">Drop column here</div>
+                        </div>
+                    </div>
+                    
+                    <div class="drop-zone required" id="y-axis-zone">
+                        <div class="zone-header">Y-Axis</div>
+                        <div class="zone-content" data-encoding="y">
+                            <div class="zone-placeholder">Drop column here</div>
+                        </div>
+                    </div>
+                    
+                    <div class="drop-zone optional" id="color-zone">
+                        <div class="zone-header">Color</div>
+                        <div class="zone-content" data-encoding="color">
+                            <div class="zone-placeholder">Drop column (optional)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="drop-zone optional" id="size-zone">
+                        <div class="zone-header">Size</div>
+                        <div class="zone-content" data-encoding="size">
+                            <div class="zone-placeholder">Drop column (optional)</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart Configuration -->
+            <section class="config-section">
+                <h3>⚙️ Configuration</h3>
+                <div class="config-options">
+                    <div class="config-row">
+                        <label for="chart-title">Title:</label>
+                        <input type="text" id="chart-title" placeholder="Enter chart title">
+                    </div>
+                    <div class="config-row">
+                        <label for="chart-width">Width:</label>
+                        <input type="number" id="chart-width" value="600" min="200" max="1200">
+                    </div>
+                    <div class="config-row">
+                        <label for="chart-height">Height:</label>
+                        <input type="number" id="chart-height" value="400" min="200" max="800">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Right Panel: Chart Preview -->
+        <div class="right-panel">
+            <section class="preview-section">
+                <div class="preview-header">
+                    <h3>📈 Chart Preview</h3>
+                    <div class="preview-actions">
+                        <button id="refresh-chart" class="action-btn">🔄 Refresh</button>
+                        <button id="export-json" class="action-btn">📋 Export JSON</button>
+                        <button id="download-chart" class="action-btn">💾 Download</button>
+                    </div>
+                </div>
+                <div class="chart-container" id="chart-container">
+                    <div class="chart-placeholder">
+                        <div class="placeholder-icon">📊</div>
+                        <p>Upload data and configure mappings to preview chart</p>
+                    </div>
+                </div>
+                
+                <!-- Vega-Lite Specification Preview -->
+                <div class="spec-section">
+                    <h4>Chart Specification</h4>
+                    <div class="spec-tabs">
+                        <button class="spec-tab active" data-tab="preview">Preview</button>
+                        <button class="spec-tab" data-tab="vega">Vega-Lite</button>
+                        <button class="spec-tab" data-tab="full">Full Spec</button>
+                    </div>
+                    <div class="spec-content">
+                        <pre id="spec-display">Configure chart to see specification</pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-info">
+            <span id="status-message">Ready</span>
+        </div>
+        <div class="status-actions">
+            <button id="clear-all" class="status-btn">🗑️ Clear All</button>
+            <button id="save-project" class="status-btn">💾 Save Project</button>
+        </div>
+    </div>
+
+    <script type="module" src="./chart-builder.js"></script>
+</body>
+</html>
