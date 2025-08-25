@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
+# package-lock.json - keeping for CI/CD consistency
 
 # Build output
 dist/
