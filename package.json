@@ -5,7 +5,8 @@
   "main": "script.js",
   "scripts": {
     "dev": "vite --port 4173",
-    "build": "vite build",
+    "build": "vite build && npm run copy-assets",
+    "copy-assets": "cp -r docs dist/ && cp -r sample-data dist/",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",

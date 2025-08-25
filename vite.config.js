@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   // Set the base path for GitHub Pages deployment
@@ -16,6 +17,13 @@ export default defineConfig({
     target: 'es2015',
     
     rollupOptions: {
+      // Multiple entry points for all HTML files
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        'chart-builder': resolve(__dirname, 'chart-builder.html'),
+        'monaco-sandbox': resolve(__dirname, 'monaco-sandbox.html'),
+        sandbox: resolve(__dirname, 'sandbox.html')
+      },
       // Ensure proper handling of assets
       output: {
         manualChunks: {
@@ -35,5 +43,15 @@ export default defineConfig({
   // Optimize dependencies
   optimizeDeps: {
     include: ['d3', 'vega-lite', 'vega-embed', 'monaco-editor']
-  }
+  },
+
+  // Copy additional directories to build output
+  plugins: [
+    {
+      name: 'copy-assets',
+      generateBundle() {
+        // This will be handled by a simple copy in the build script
+      }
+    }
+  ]
 })

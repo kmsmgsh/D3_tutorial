@@ -3,7 +3,7 @@
  * Automatically adjusts links based on the current domain
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+function initNavigationFix() {
     // Check if we're on GitHub Pages
     const isGitHubPages = window.location.hostname.includes('github.io');
     const basePath = isGitHubPages ? '/D3_tutorial' : '';
@@ -44,4 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     console.log('Navigation paths updated for deployment environment');
-});
+}
+
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavigationFix);
+} else {
+    initNavigationFix();
+}
