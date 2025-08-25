@@ -21,6 +21,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         'chart-builder': resolve(__dirname, 'chart-builder.html'),
+        'chart-builder-v2': resolve(__dirname, 'chart-builder-v2.html'),
         'monaco-sandbox': resolve(__dirname, 'monaco-sandbox.html'),
         sandbox: resolve(__dirname, 'sandbox.html')
       },

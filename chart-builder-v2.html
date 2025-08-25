@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Builder 2.0 - D3 Learning Journey</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="chart-builder-v2.css">
+</head>
+<body class="chart-builder-v2-body">
+    <!-- Top Navigation -->
+    <header class="top-nav">
+        <div class="nav-left">
+            <button class="back-btn">← Back</button>
+            <h1 class="app-title">Chart Builder 2.0</h1>
+        </div>
+        <div class="nav-center">
+            <div class="model-selector">
+                <span>MODEL: </span>
+                <select id="model-type">
+                    <option value="gpt-4o">GPT-4O</option>
+                    <option value="claude">Claude</option>
+                </select>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn">EXPORT</button>
+            <button class="nav-btn">IMPORT</button>
+            <button class="nav-btn">RESET SESSION</button>
+            <button class="user-btn">👤</button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+        <!-- Left Panel: Chart Threads -->
+        <div class="left-panel">
+            <div class="panel-header">
+                <h3>Chart Threads</h3>
+                <button class="add-thread-btn">+</button>
+            </div>
+            
+            <!-- Thread List -->
+            <div class="thread-list" id="thread-list">
+                <div class="thread-item active" data-thread="1">
+                    <div class="thread-header">
+                        <span class="thread-title">thread - 1</span>
+                        <button class="thread-menu">⋯</button>
+                    </div>
+                    <div class="thread-preview">
+                        <svg class="thread-chart" width="120" height="80"></svg>
+                    </div>
+                    <div class="thread-description">
+                        <div class="field-chip x-field">Year ×</div>
+                        <div class="field-chip y-field">Renewable Per... ×</div>
+                        <div class="field-chip entity-field">Entity</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Upload Section -->
+            <div class="data-upload-section">
+                <div class="upload-area" id="upload-area-v2">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        <p>Drop data files here</p>
+                        <span>CSV, JSON, TSV supported</span>
+                    </div>
+                </div>
+                <input type="file" id="file-input-v2" accept=".csv,.json,.tsv" style="display: none;">
+            </div>
+        </div>
+
+        <!-- Center Panel: Chart & Controls -->
+        <div class="center-panel">
+            <!-- Workflow Steps -->
+            <div class="workflow-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Concept Encoding Shelf:</h4>
+                        <p>specify chart with field encodings and NL instructions</p>
+                    </div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>(Local) Data Thread:</h4>
+                        <p>backtrack and revise inputs</p>
+                    </div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Data Threads:</h4>
+                        <p>navigate data derivation history</p>
+                    </div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-content">
+                        <h4>Data View:</h4>
+                        <p>inspect original and derived data</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Chart Area -->
+            <div class="main-chart-area">
+                <div class="chart-container-v2" id="chart-container-v2">
+                    <div class="chart-placeholder-v2">
+                        <div class="placeholder-content">
+                            <div class="chart-icon">📊</div>
+                            <h3>Create Your Visualization</h3>
+                            <p>Upload data and configure mappings to get started</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chart Controls -->
+                <div class="chart-controls">
+                    <div class="data-info-bar">
+                        <span class="data-source">data: </span>
+                        <div class="control-buttons">
+                            <button class="control-btn" title="Copy">📋</button>
+                            <button class="control-btn" title="Data View">📊</button>
+                            <button class="control-btn" title="Export">📁</button>
+                            <button class="control-btn" title="Star">⭐</button>
+                            <button class="control-btn" title="Expand">⛶</button>
+                            <button class="control-btn active" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Encoding Configuration -->
+            <div class="encoding-config">
+                <div class="encoding-row">
+                    <label class="encoding-label">x-axis</label>
+                    <select class="field-select" id="x-axis-select">
+                        <option value="">Select field...</option>
+                    </select>
+                </div>
+                <div class="encoding-row">
+                    <label class="encoding-label">y-axis</label>
+                    <select class="field-select" id="y-axis-select">
+                        <option value="">Select field...</option>
+                    </select>
+                </div>
+                <div class="encoding-row">
+                    <label class="encoding-label">detail</label>
+                    <select class="field-select" id="detail-select">
+                        <option value="">Select field...</option>
+                    </select>
+                </div>
+                <div class="encoding-row">
+                    <label class="encoding-label">color</label>
+                    <select class="field-select" id="color-select">
+                        <option value="">Select field...</option>
+                    </select>
+                </div>
+                <div class="encoding-row">
+                    <label class="encoding-label">opacity</label>
+                    <select class="field-select" id="opacity-select">
+                        <option value="">Select field...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Natural Language Input -->
+            <div class="nl-input-section">
+                <div class="nl-header">
+                    <span>💬 Natural Language Instructions</span>
+                </div>
+                <div class="nl-input-container">
+                    <textarea 
+                        id="nl-instructions" 
+                        placeholder="Describe what you want to visualize... (e.g., 'Show renewable energy trends by country over time')"
+                        rows="2"
+                    ></textarea>
+                    <button class="nl-submit-btn">Generate</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Data Fields -->
+        <div class="right-panel">
+            <div class="panel-header">
+                <h3>Data Fields</h3>
+                <span class="new-badge">new</span>
+                <button class="panel-menu">⋯</button>
+            </div>
+
+            <!-- Field Search -->
+            <div class="field-search">
+                <input type="text" placeholder="Search fields..." id="field-search">
+            </div>
+
+            <!-- Aggregation Functions -->
+            <div class="field-section">
+                <h4 class="section-title">Aggregations</h4>
+                <div class="field-list" id="aggregation-fields">
+                    <div class="field-item aggregation" data-field="count" data-type="quantitative">
+                        <div class="field-info">
+                            <span class="field-name">count</span>
+                            <span class="field-type">📊</span>
+                        </div>
+                    </div>
+                    <div class="field-item aggregation" data-field="sum" data-type="quantitative">
+                        <div class="field-info">
+                            <span class="field-name">sum</span>
+                            <span class="field-type">📊</span>
+                        </div>
+                    </div>
+                    <div class="field-item aggregation" data-field="average" data-type="quantitative">
+                        <div class="field-info">
+                            <span class="field-name">average</span>
+                            <span class="field-type">📊</span>
+                        </div>
+                    </div>
+                    <div class="field-item aggregation" data-field="median" data-type="quantitative">
+                        <div class="field-info">
+                            <span class="field-name">median</span>
+                            <span class="field-type">📊</span>
+                        </div>
+                    </div>
+                    <div class="field-item aggregation" data-field="bin" data-type="quantitative">
+                        <div class="field-info">
+                            <span class="field-name">bin</span>
+                            <span class="field-type">📊</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Fields -->
+            <div class="field-section">
+                <h4 class="section-title">Fields</h4>
+                <div class="field-list" id="data-fields">
+                    <!-- Fields will be populated here -->
+                </div>
+            </div>
+
+            <!-- Data Operations -->
+            <div class="field-section">
+                <h4 class="section-title">Operations</h4>
+                <div class="operation-buttons">
+                    <button class="operation-btn">+ Add Field</button>
+                    <button class="operation-btn">🔄 Transform</button>
+                    <button class="operation-btn">📊 Aggregate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Panel: Data View -->
+    <div class="bottom-panel" id="bottom-panel">
+        <div class="data-view-header">
+            <div class="data-view-title">
+                <h4>Data View</h4>
+                <span class="row-count" id="row-count">0 rows</span>
+            </div>
+            <div class="data-view-controls">
+                <button class="view-control-btn">↗️ Expand</button>
+                <button class="view-control-btn">⚙️ Settings</button>
+            </div>
+        </div>
+        <div class="data-table-wrapper">
+            <table class="data-table" id="data-table-v2">
+                <thead id="data-table-head-v2"></thead>
+                <tbody id="data-table-body-v2"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="./chart-builder-v2.js"></script>
+</body>
+</html>
