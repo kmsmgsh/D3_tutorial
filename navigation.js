@@ -31,6 +31,9 @@ class D3Navigator {
         
         // Scatter plot preview (placeholder)
         this.createScatterPreview();
+        
+        // Python playground preview
+        this.createPythonPreview();
     }
 
     /**
@@ -172,6 +175,73 @@ class D3Navigator {
     }
 
     /**
+     * Creates a Python code visualization preview
+     */
+    createPythonPreview() {
+        const svg = d3.select('#python-preview');
+        const margin = { top: 10, right: 10, bottom: 20, left: 20 };
+        const width = 200 - margin.left - margin.right;
+        const height = 120 - margin.top - margin.bottom;
+
+        const g = svg.append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        // Create a code-like visualization with rectangles representing code blocks
+        const codeBlocks = [
+            { x: 0, y: 10, width: 80, height: 8, color: '#f7931e' },   // import statement
+            { x: 0, y: 25, width: 60, height: 8, color: '#569cd6' },   // function def
+            { x: 10, y: 40, width: 100, height: 8, color: '#4ec9b0' }, // code line
+            { x: 10, y: 55, width: 75, height: 8, color: '#4ec9b0' },  // code line
+            { x: 0, y: 70, width: 45, height: 8, color: '#ce9178' },   // print statement
+        ];
+
+        g.selectAll('.code-block')
+            .data(codeBlocks)
+            .enter()
+            .append('rect')
+            .attr('class', 'code-block')
+            .attr('x', d => d.x)
+            .attr('y', d => d.y)
+            .attr('width', d => d.width)
+            .attr('height', d => d.height)
+            .attr('fill', d => d.color)
+            .attr('rx', 2);
+
+        // Add Python logo-inspired elements (simplified)
+        g.append('circle')
+            .attr('cx', width - 15)
+            .attr('cy', 20)
+            .attr('r', 8)
+            .attr('fill', '#3776ab')
+            .attr('opacity', 0.8);
+
+        g.append('circle')
+            .attr('cx', width - 15)
+            .attr('cy', 35)
+            .attr('r', 6)
+            .attr('fill', '#ffd43b')
+            .attr('opacity', 0.8);
+
+        // Add some "data" visualization dots
+        const dataPoints = d3.range(8).map((d, i) => ({
+            x: 20 + (i * 15),
+            y: 95,
+            size: 3 + Math.random() * 2
+        }));
+
+        g.selectAll('.data-dot')
+            .data(dataPoints)
+            .enter()
+            .append('circle')
+            .attr('class', 'data-dot')
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', d => d.size)
+            .attr('fill', '#f7931e')
+            .attr('opacity', 0.7);
+    }
+
+    /**
      * Set up event listeners for navigation
      */
     setupEventListeners() {
@@ -243,6 +313,10 @@ class D3Navigator {
         // Load the example
         if (exampleType === 'bar-chart') {
             this.loadBarChart(chartContainer);
+        } else if (exampleType === 'python-playground') {
+            // Redirect to Python playground instead of showing modal
+            window.open('python-sandbox.html', '_blank');
+            return; // Don't show modal for external links
         }
         
         // Show modal
@@ -369,7 +443,8 @@ class D3Navigator {
             'interactive-bar': 'Interactive Bar Chart',
             'animated-chart': 'Animated Transitions',
             'force-layout': 'Force-Directed Graph',
-            'choropleth': 'Choropleth Map'
+            'choropleth': 'Choropleth Map',
+            'python-playground': 'Python Playground'
         };
         return titles[exampleType] || 'D3 Example';
     }
