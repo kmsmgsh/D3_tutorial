@@ -23,6 +23,7 @@ export default defineConfig({
         'chart-builder': resolve(__dirname, 'chart-builder.html'),
         'chart-builder-v2': resolve(__dirname, 'chart-builder-v2.html'),
         'monaco-sandbox': resolve(__dirname, 'monaco-sandbox.html'),
+        'python-sandbox': resolve(__dirname, 'python-sandbox.html'),
         sandbox: resolve(__dirname, 'sandbox.html')
       },
       // Ensure proper handling of assets
